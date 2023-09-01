@@ -12,6 +12,7 @@ fastapi = {extras = ["all"], version = "^0.103.0"}
 sqlalchemy = "^2.0.20"
 python-dotenv = "^1.0.0"
 cryptography = "^41.0.3"
+psycopg2 = "^2.9.7"
 
 
 [build-system]
