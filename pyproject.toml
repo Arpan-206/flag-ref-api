@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "flag-ref-api"
+version = "0.1.0"
+description = ""
+authors = ["Arpan Pandey <arpanpandey.aps@gmail.com>"]
+readme = "README.md"
+packages = [{include = "flag_ref_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = {extras = ["all"], version = "^0.103.0"}
+sqlalchemy = "^2.0.20"
+python-dotenv = "^1.0.0"
+cryptography = "^41.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
