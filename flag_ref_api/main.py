@@ -91,9 +91,13 @@ def get_votes_by_flag(flag_id: int, db: Session = Depends(get_db)):
 @app.get("/votes")
 def votes(db: Session = Depends(get_db)):
     flags = []
+
     for flag in crud.get_flags(db):
         flag_obj = get_votes_by_flag(flag_id=flag.id, db=db)
         flags.append(flag_obj)
+
+    if len(flags) <= 0:
+        raise HTTPException(404, "No votes found")
 
     return flags
 
