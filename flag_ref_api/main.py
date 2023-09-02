@@ -96,3 +96,13 @@ def votes(db: Session = Depends(get_db)):
         flags.append(flag_obj)
 
     return flags
+
+
+@app.get("/flags")
+def flags(skip: int = 100, limit: int = 100, db: Session = Depends(get_db)):
+    flags = crud.get_flags(db, skip=skip, limit=limit)
+
+    if len(flags) <= 0:
+        raise HTTPException(404, "No flags found")
+
+    return flags
