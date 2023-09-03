@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 from flag_ref_api import crud, models, schema
 from flag_ref_api.database import SessionLocal, engine
 
+from flag_ref_api import encrypto
+
 load_dotenv()
 
 import os
@@ -37,9 +39,14 @@ def cast_vote(vote: schema.VoteCreate, db: Session = Depends(get_db)):
 
     try:
         votee = crud.create_vote(db, vote=vote, flag_id=vote.flag_id)
-        crud.create_voter(
-            db, voter=models.Voter(slack_id=vote.voter_id, voted_on=datetime.now())
+        voter = models.Voter(slack_id=vote.voter_id, voted_on=datetime.now())
+        voter_db = (
+            db.query(models.Voter)
+            .filter(models.Voter.slack_id == voter.slack_id)
+            .first()
         )
+        if not voter_db:
+            voter_db = crud.create_voter(db, voter=voter)
         return votee
     except ValueError:
         raise HTTPException(400, detail="Some of the request parameters are unusual.")
@@ -103,8 +110,8 @@ def votes(db: Session = Depends(get_db)):
 
 
 @app.get("/flags")
-def flags(skip: int = 100, limit: int = 100, db: Session = Depends(get_db)):
-    flags = crud.get_flags(db, skip=skip, limit=limit)
+def flags(db: Session = Depends(get_db)):
+    flags = crud.get_flags(db)
 
     if len(flags) <= 0:
         raise HTTPException(404, "No flags found")

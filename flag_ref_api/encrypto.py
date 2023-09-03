@@ -11,8 +11,8 @@ f = Fernet(key)
 
 
 def encrypt(stuff: str):
-    return f.encrypt(stuff.encode())
+    return str(f.encrypt(stuff.encode()).decode())
 
 
 def decrypt(stuff: str):
-    return f.decrypt(stuff)
+    return str(f.decrypt(stuff.encode()).decode())
