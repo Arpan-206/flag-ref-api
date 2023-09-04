@@ -72,7 +72,7 @@ def create_vote(db: Session, vote: schema.VoteCreate, flag_id: int):
 
 
 def create_voter(db: Session, voter: schema.VoterCreate):
-    db_voter = models.Voter(slack_id=voter.slack_id, voted_on=datetime.now())
+    db_voter = models.Voter(slack_id=voter.slack_id, voted_on=datetime.now(), voted_for=voter.voted_for)
 
     db.add(db_voter)
     db.commit()

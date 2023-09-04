@@ -7,8 +7,6 @@ from sqlalchemy.orm import Session
 from flag_ref_api import crud, models, schema
 from flag_ref_api.database import SessionLocal, engine
 
-from flag_ref_api import encrypto
-
 load_dotenv()
 
 import os
@@ -39,14 +37,16 @@ def cast_vote(vote: schema.VoteCreate, db: Session = Depends(get_db)):
 
     try:
         votee = crud.create_vote(db, vote=vote, flag_id=vote.flag_id)
-        voter = models.Voter(slack_id=vote.voter_id, voted_on=datetime.now())
+        voter = models.Voter(slack_id=vote.voter_id, voted_on=datetime.now(), voted_for=vote.flag_id)
         voter_db = (
             db.query(models.Voter)
-            .filter(models.Voter.slack_id == voter.slack_id)
+            .filter(models.Voter.slack_id == voter.slack_id).filter(models.Voter.voted_for == voter.voted_for)
             .first()
         )
         if not voter_db:
             voter_db = crud.create_voter(db, voter=voter)
+        else:
+            raise HTTPException(400, "You have already voted for this flag")
         return votee
     except ValueError:
         raise HTTPException(400, detail="Some of the request parameters are unusual.")

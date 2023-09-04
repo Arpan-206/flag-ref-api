@@ -44,11 +44,11 @@ class FlagWitScore(FlagBase):
 
 class VoterBase(BaseModel):
     slack_id: str
-
+    voted_for: int
+    
 
 class Voter(VoterBase):
-    pass
-
+    flags: list[Flag] = []
     class Config:
         orm_mode = True
 

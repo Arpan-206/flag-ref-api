@@ -26,6 +26,7 @@ class Flag(Base):
     added_on = Column("added_on", DateTime)
 
     votes = relationship("Vote", back_populates="creator")
+    voters = relationship("Voter", back_populates="flags")
 
 
 class Voter(Base):
@@ -33,3 +34,6 @@ class Voter(Base):
 
     slack_id = Column("slack_id", String, primary_key=True, index=True)
     voted_on = Column("voted_on", DateTime)
+    voted_for = Column(Integer, ForeignKey("flags.id"))
+
+    flags = relationship("Flag", back_populates="voters")
