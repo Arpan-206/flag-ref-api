@@ -37,10 +37,13 @@ def cast_vote(vote: schema.VoteCreate, db: Session = Depends(get_db)):
 
     try:
         votee = crud.create_vote(db, vote=vote, flag_id=vote.flag_id)
-        voter = models.Voter(slack_id=vote.voter_id, voted_on=datetime.now(), voted_for=vote.flag_id)
+        voter = models.Voter(
+            slack_id=vote.voter_id, voted_on=datetime.now(), voted_for=vote.flag_id
+        )
         voter_db = (
             db.query(models.Voter)
-            .filter(models.Voter.slack_id == voter.slack_id).filter(models.Voter.voted_for == voter.voted_for)
+            .filter(models.Voter.slack_id == voter.slack_id)
+            .filter(models.Voter.voted_for == voter.voted_for)
             .first()
         )
         if not voter_db:
@@ -93,6 +96,28 @@ def get_votes_by_flag(flag_id: int, db: Session = Depends(get_db)):
     )
 
     return flag
+
+
+@app.get("/has_voted")
+def has_voted(slack_id: str, flag_id: str, db: Session = Depends(get_db)):
+    voter = (
+        db.query(models.Voter)
+        .filter(models.Voter.slack_id == slack_id)
+        .filter(models.Voter.voted_for == flag_id)
+        .first()
+    )
+
+    if voter is None:
+        return {
+            "has_voted": False,
+            "message": "You have not voted for this flag yet!"
+        }
+
+    return {
+        "voter": voter.slack_id,
+        "voted_for": voter.voted_for,
+        "voted_on": voter.voted_on,
+    }
 
 
 @app.get("/votes")

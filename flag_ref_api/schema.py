@@ -39,6 +39,8 @@ class FlagCreate(FlagBase):
 
 
 class FlagWitScore(FlagBase):
+    id: int
+    added_on: PastDatetime
     score: int
 
 
