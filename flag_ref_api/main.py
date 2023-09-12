@@ -50,7 +50,8 @@ def cast_vote(vote: schema.VoteCreate, db: Session = Depends(get_db)):
             voter_db = crud.create_voter(db, voter=voter)
         else:
             raise HTTPException(400, "You have already voted for this flag")
-        return votee
+        
+        return voter_db
     except ValueError:
         raise HTTPException(400, detail="Some of the request parameters are unusual.")
 

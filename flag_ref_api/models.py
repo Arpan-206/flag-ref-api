@@ -31,8 +31,9 @@ class Flag(Base):
 
 class Voter(Base):
     __tablename__ = "voters"
+    id = Column("id", Integer, primary_key=True, index=True)
 
-    slack_id = Column("slack_id", String, primary_key=True, index=True)
+    slack_id = Column("slack_id", String)
     voted_on = Column("voted_on", DateTime)
     voted_for = Column(Integer, ForeignKey("flags.id"))
 

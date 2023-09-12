@@ -50,6 +50,7 @@ class VoterBase(BaseModel):
     
 
 class Voter(VoterBase):
+    id: int
     flags: list[Flag] = []
     class Config:
         orm_mode = True
