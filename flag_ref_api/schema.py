@@ -1,4 +1,4 @@
-from pydantic import BaseModel, PastDatetime
+from pydantic import BaseModel, NaiveDatetime
 
 
 class VoteBase(BaseModel):
@@ -9,7 +9,7 @@ class VoteBase(BaseModel):
 
 class Vote(VoteBase):
     id: int
-    casted_on: PastDatetime
+    casted_on: NaiveDatetime
 
     class Config:
         orm_mode = True
@@ -26,7 +26,7 @@ class FlagBase(BaseModel):
 
 class Flag(FlagBase):
     id: int
-    added_on: PastDatetime
+    added_on: NaiveDatetime
 
     votes: list[Vote] = []
 
@@ -40,7 +40,7 @@ class FlagCreate(FlagBase):
 
 class FlagWitScore(FlagBase):
     id: int
-    added_on: PastDatetime
+    added_on: NaiveDatetime
     score: int
 
 
