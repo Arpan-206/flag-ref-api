@@ -35,6 +35,6 @@ class Voter(Base):
 
     slack_id = Column("slack_id", String)
     voted_on = Column("voted_on", DateTime)
-    voted_for = Column(Integer, ForeignKey("flags.id"))
+    voted_for = Column(Integer, ForeignKey("flags.id", ondelete="CASCADE"))
 
     flags = relationship("Flag", back_populates="voters")

@@ -79,3 +79,19 @@ def create_voter(db: Session, voter: schema.VoterCreate):
     db.refresh(db_voter)
 
     return db_voter
+
+
+def clear_votes(db: Session):
+    db.query(models.Vote).delete()
+    db.commit()
+    return True
+
+def clear_flags(db: Session):
+    db.query(models.Flag).delete()
+    db.commit()
+    return True
+
+def clear_voters(db: Session):
+    db.query(models.Voter).delete()
+    db.commit()
+    return True
