@@ -84,6 +84,8 @@ def add_flag(flag: schema.FlagCreate, db: Session = Depends(get_db)):
 
 @app.get("/get_votes_by_flag")
 def get_votes_by_flag(flag_id: int, db: Session = Depends(get_db)):
+
+    return {"message": "Vote counting is closed, the result will be revealed in the announcement!"}
     flag = crud.get_flag(db, flag_id)
 
     votes = db.query(models.Vote).filter(models.Vote.flag_id == flag_id).all()
@@ -132,6 +134,8 @@ def has_voted(slack_id: str, flag_id: str, db: Session = Depends(get_db)):
 @app.get("/votes")
 def votes(db: Session = Depends(get_db)):
     flags = []
+
+    return {"message": "Vote counting is closed, the result will be revealed in the announcement!"}
 
     for flag in crud.get_flags(db):
         flag_obj = get_votes_by_flag(flag_id=flag.id, db=db)
