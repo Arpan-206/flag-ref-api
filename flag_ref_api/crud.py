@@ -35,6 +35,9 @@ def get_votes(db: Session, skip: int = 0, limit: int = 100):
 def get_flags(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Flag).offset(skip).limit(limit).all()
 
+def get_voters(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Voter).offset(skip).limit(limit).all()
+
 
 def create_flag(db: Session, flag: schema.FlagCreate):
     db_flag = models.Flag(

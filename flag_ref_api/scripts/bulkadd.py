@@ -9,10 +9,6 @@ db = next(db)
 
 my_dicts = [
     {
-        "image_url": "https://cloud-phvhtcj16-hack-club-bot.vercel.app/0shiporch.png",
-        "creator_slack_id": "U04KEK4TS72",
-    },
-    {
         "image_url": "https://cloud-6fxen4pq2-hack-club-bot.vercel.app/0solid_orph.png",
         "creator_slack_id": "U03CBNJUWJG",
     },
@@ -29,9 +25,18 @@ my_dicts = [
         "creator_slack_id": "U04EQJ4RRHA",
     },
     {
-        "image_url": "https://cloud-omd0zrffr-hack-club-bot.vercel.app/0image.png",
-        "creator_slack_id": "U041FQB8VK2",
+        "image_url": "https://cloud-k7xkcv0lb-hack-club-bot.vercel.app/0shiporch2.png",
+        "creator_slack_id": "U04KEK4TS72",
+    },
+    {
+        "image_url": "https://cloud-1xqzyjl5q-hack-club-bot.vercel.app/0image.png",
+        "creator_slack_id": "U053DV31ATD",
+    },
+    {
+        "image_url": "https://cloud-40mz0w1zg-hack-club-bot.vercel.app/0frame_1_10_.png",
+        "creator_slack_id": "U0162MDUP7C",
     }
+
 ]
 
 for my_dict in my_dicts:
