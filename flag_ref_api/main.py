@@ -35,9 +35,7 @@ def cast_vote(vote: schema.VoteCreate, db: Session = Depends(get_db)):
     if vote.creation_key != os.getenv("CREATION_KEY"):
         raise HTTPException(401, detail="Creation Key must be valid!")
     
-    # Stop voting after midnight edt
-    if datetime.now().hour >= 4:
-        raise HTTPException(401, detail="Voting is closed!")
+    return {"message": "Voting is closed!"}
 
     try:
         votee = crud.create_vote(db, vote=vote, flag_id=vote.flag_id)
@@ -64,6 +62,8 @@ def cast_vote(vote: schema.VoteCreate, db: Session = Depends(get_db)):
 def add_flag(flag: schema.FlagCreate, db: Session = Depends(get_db)):
     if flag.flag_add_key != os.getenv("FLAG_ADD_KEY"):
         raise HTTPException(401, detail="Flag adding key must be valid!")
+    
+    return {"message": "Flag adding is closed!"}
     
     # Stop adding flags after midnight edt
     if datetime.now().hour >= 4:
